@@ -3,250 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browne & Jenkins - Literary Dark Fiction</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <title>Browne & Jenkins - Narrative Exploration</title>
     <style>
-        :root {
-            --bg-color: #f4f4f4;
-            --text-color: #333;
-            --accent-color: #8b0000;
-            --secondary-color: #2c3e50;
-        }
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Libre Baskerville', serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
-        .container {
-            width: 80%;
-            margin: auto;
+            height: 100%;
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
             overflow: hidden;
         }
-        header {
-            background: var(--secondary-color);
-            color: #fff;
-            padding: 1rem 0;
-            position: fixed;
-            width: 100%;
-            z-index: 1000;
-        }
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            padding: 0 1rem;
-            transition: color 0.3s ease;
-        }
-        .nav-links a:hover {
-            color: var(--accent-color);
-        }
-        .hero {
+        #terminal {
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: url('/api/placeholder/1920/1080') no-repeat center center/cover;
+            width: 100vw;
+            padding: 20px;
+            box-sizing: border-box;
+            overflow-y: auto;
             position: relative;
-            color: #fff;
         }
-        .hero::after {
-            content: '';
-            position: absolute;
+        #cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #0f0;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .choice {
+            cursor: pointer;
+            color: #ff0;
+            margin: 5px 0;
+        }
+        .choice:hover {
+            text-decoration: underline;
+        }
+        #overlay {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.15),
+                rgba(0, 0, 0, 0.15) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+            pointer-events: none;
         }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-        .btn {
-            display: inline-block;
-            background: var(--accent-color);
-            color: #fff;
-            padding: 0.7rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background 0.3s ease;
-        }
-        .btn:hover {
-            background: #a52a2a;
-        }
-        .featured-books {
-            padding: 4rem 0;
-            background: #fff;
-        }
-        .book-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-        .book-card {
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            padding: 1.5rem;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-        .book-card:hover {
-            transform: translateY(-5px);
-        }
-        .book-card img {
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 1rem;
-        }
-        .authors {
-            padding: 4rem 0;
-            background: var(--secondary-color);
-            color: #fff;
-        }
-        .author-list {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-        }
-        .author {
-            text-align: center;
-            margin: 1rem;
-        }
-        .author img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-        footer {
-            background: var(--secondary-color);
-            color: #fff;
-            text-align: center;
-            padding: 2rem 0;
-        }
-        .social-links a {
-            color: #fff;
-            font-size: 1.5rem;
-            margin: 0 0.5rem;
-            transition: color 0.3s ease;
-        }
-        .social-links a:hover {
-            color: var(--accent-color);
-        }
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            .container {
-                width: 90%;
-            }
+        #glitch {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
-    <header>
-        <nav class="container">
-            <div class="logo">B&J</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#books">Books</a>
-                <a href="#authors">Authors</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <h1>Browne & Jenkins</h1>
-                <p>Purveyors of Literary Dark Fiction</p>
-                <a href="#books" class="btn">Explore Our Collection</a>
-            </div>
-        </section>
-
-        <section id="books" class="featured-books">
-            <div class="container">
-                <h2>Featured Titles</h2>
-                <div class="book-grid">
-                    <div class="book-card">
-                        <img src="/api/placeholder/200/300" alt="Book Cover">
-                        <h3>The Whispering Shadows</h3>
-                        <p>by E.A. Poe</p>
-                    </div>
-                    <div class="book-card">
-                        <img src="/api/placeholder/200/300" alt="Book Cover">
-                        <h3>Echoes of Eternity</h3>
-                        <p>by H.P. Lovecraft</p>
-                    </div>
-                    <div class="book-card">
-                        <img src="/api/placeholder/200/300" alt="Book Cover">
-                        <h3>The Crimson Veil</h3>
-                        <p>by S. King</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="authors" class="authors">
-            <div class="container">
-                <h2>Our Authors</h2>
-                <div class="author-list">
-                    <div class="author">
-                        <img src="/api/placeholder/150/150" alt="Author">
-                        <h3>Jane Doe</h3>
-                    </div>
-                    <div class="author">
-                        <img src="/api/placeholder/150/150" alt="Author">
-                        <h3>John Smith</h3>
-                    </div>
-                    <div class="author">
-                        <img src="/api/placeholder/150/150" alt="Author">
-                        <h3>Emily Brown</h3>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Browne & Jenkins. All rights reserved.</p>
-            <div class="social-links">
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </footer>
+    <div id="terminal"></div>
+    <div id="overlay"></div>
+    <div id="glitch"></div>
 
     <script>
-        // Simple scroll effect for header
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            header.style.backgroundColor = window.scrollY > 100 ? '#1a1a1a' : '#2c3e50';
+        const terminal = document.getElementById('terminal');
+        let currentStoryNode = 'start';
+
+        const storyNodes = {
+            start: {
+                text: "Welcome to Browne & Jenkins, purveyors of literary nightmares. How would you like to proceed?",
+                choices: [
+                    { text: "Explore our latest releases", next: "releases" },
+                    { text: "Meet our authors", next: "authors" },
+                    { text: "Experience a sample of our work", next: "sample" }
+                ]
+            },
+            releases: {
+                text: "Our latest releases include:\n1. 'Whispers in the Void' by E.A. Blackwood\n2. 'The Crimson Maze' by S.L. Holloway\n3. 'Echoes of Eternity' by M.R. James II",
+                choices: [
+                    { text: "Tell me about 'Whispers in the Void'", next: "whispers" },
+                    { text: "Go back", next: "start" }
+                ]
+            },
+            authors: {
+                text: "Our esteemed authors include:\n- E.A. Blackwood: Master of cosmic horror\n- S.L. Holloway: Weaver of psychological terrors\n- M.R. James II: Heir to the ghost story throne",
+                choices: [
+                    { text: "Learn more about E.A. Blackwood", next: "blackwood" },
+                    { text: "Go back", next: "start" }
+                ]
+            },
+            sample: {
+                text: "The door creaks open, revealing a dimly lit room. The air is thick with the scent of old books and something... else. A figure sits in the corner, shrouded in shadows. It speaks: 'Choose your path, dear reader.'",
+                choices: [
+                    { text: "Approach the figure", next: "approach" },
+                    { text: "Examine the room", next: "examine" },
+                    { text: "Run away", next: "run" }
+                ]
+            },
+            whispers: {
+                text: "'Whispers in the Void' is a mind-bending journey through fractured realities. Blackwood's prose will make you question the very fabric of existence.",
+                choices: [
+                    { text: "Purchase 'Whispers in the Void'", next: "purchase" },
+                    { text: "Go back", next: "releases" }
+                ]
+            },
+            blackwood: {
+                text: "E.A. Blackwood, reclusive and brilliant, draws inspiration from dreams and nightmares alike. Their work has been described as 'Lovecraft meets Borges in a fever dream.'",
+                choices: [
+                    { text: "Read a sample of Blackwood's work", next: "sample" },
+                    { text: "Go back", next: "authors" }
+                ]
+            },
+            approach: {
+                text: "As you near the figure, it looks up. You find yourself staring into eyes that seem to contain entire universes. 'Are you ready to see beyond the veil?' it asks.",
+                choices: [
+                    { text: "Yes, show me", next: "beyondVeil" },
+                    { text: "No, I'm not ready", next: "start" }
+                ]
+            },
+            examine: {
+                text: "The room is filled with books, their spines bearing titles you can't quite read. A mirror on the wall doesn't reflect your image, but instead shows a vast, star-filled void.",
+                choices: [
+                    { text: "Touch the mirror", next: "mirror" },
+                    { text: "Go back", next: "sample" }
+                ]
+            },
+            run: {
+                text: "You turn to flee, but the door has vanished. The walls seem to close in, whispering secrets not meant for mortal ears.",
+                choices: [
+                    { text: "Close your eyes and wish it away", next: "start" },
+                    { text: "Listen to the whispers", next: "whispers" }
+                ]
+            },
+            purchase: {
+                text: "Excellent choice. Your copy of 'Whispers in the Void' will arrive in 3-5 business days. Or perhaps it's already here, waiting for you to notice it on your shelf...",
+                choices: [
+                    { text: "Return to main menu", next: "start" }
+                ]
+            },
+            beyondVeil: {
+                text: "The figure waves its hand, and reality seems to ripple. You see glimpses of impossible geometries and hear the echoes of long-dead stars. When you blink, you're back at the beginning, forever changed.",
+                choices: [
+                    { text: "Start over", next: "start" }
+                ]
+            },
+            mirror: {
+                text: "Your fingers brush the surface of the mirror, and you feel a cold so intense it burns. For a moment, you see through the eyes of something ancient and vast, watching the birth and death of galaxies.",
+                choices: [
+                    { text: "Pull away", next: "start" },
+                    { text: "Keep looking", next: "beyondVeil" }
+                ]
+            }
+        };
+
+        function typeWriter(text, onComplete) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    terminal.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, 25);
+                } else {
+                    terminal.innerHTML += '<span id="cursor"></span>';
+                    if (onComplete) onComplete();
+                }
+            }
+            type();
+        }
+
+        function displayChoices(choices) {
+            choices.forEach((choice, index) => {
+                const choiceElement = document.createElement('div');
+                choiceElement.className = 'choice';
+                choiceElement.textContent = `${index + 1}. ${choice.text}`;
+                choiceElement.onclick = () => navigateTo(choice.next);
+                terminal.appendChild(choiceElement);
+            });
+        }
+
+        function navigateTo(nodeId) {
+            const node = storyNodes[nodeId];
+            terminal.innerHTML = '';
+            currentStoryNode = nodeId;
+            typeWriter(node.text, () => displayChoices(node.choices));
+            triggerGlitchEffect();
+        }
+
+        function triggerGlitchEffect() {
+            const glitch = document.getElementById('glitch');
+            glitch.style.opacity = 0.7;
+            setTimeout(() => {
+                glitch.style.opacity = 0;
+            }, 150);
+        }
+
+        navigateTo('start');
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const choices = storyNodes[currentStoryNode].choices;
+            const key = parseInt(e.key);
+            if (key > 0 && key <= choices.length) {
+                navigateTo(choices[key - 1].next);
+            }
         });
     </script>
 </body>
