@@ -3,25 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browne & Jenkins - Visions of Horror</title>
+    <title>Browne & Jenkins - Dark Fiction & Experimental Horror</title>
     <style>
         :root {
-            --bg-color: #1b1b1b;
-            --text-color: #f5f5dc;
-            --accent-color: #a52a2a;
-            --secondary-color: #3b3b3b;
-            --leather-color: #654321;
-            --stitch-color: #c19a6b;
-            --border-color: #8b5a2b;
-            --shadow-color: rgba(0, 0, 0, 0.7);
+            --bg-color: #0a0a0a;
+            --primary-text-color: #e0e0e0;
+            --accent-color: #b71c1c;
+            --secondary-accent-color: #4caf50;
+            --dark-gray: #1f1f1f;
+            --hover-highlight: rgba(183,28,28,0.1);
         }
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Georgia', serif;
+            font-family: 'Playfair Display', serif;
             background-color: var(--bg-color);
-            color: var(--text-color);
+            color: var(--primary-text-color);
             overflow-x: hidden;
+        }
+        h1, h2, h3, p {
+            margin: 0;
+            padding: 0;
         }
         .container {
             max-width: 1200px;
@@ -34,30 +36,29 @@
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 20px 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
-            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--dark-gray);
         }
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 0;
         }
         .logo {
             font-size: 1.5rem;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
             color: var(--accent-color);
         }
         .nav-links a {
-            color: var(--text-color);
+            color: var(--primary-text-color);
             text-decoration: none;
             margin-left: 20px;
+            font-family: 'Fira Sans', sans-serif;
             transition: color 0.3s ease;
         }
         .nav-links a:hover {
-            color: var(--accent-color);
+            color: var(--secondary-accent-color);
         }
         .hero {
             height: 100vh;
@@ -66,168 +67,229 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            overflow: hidden;
-            background: var(--bg-color) url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat;
+            background: url('your-dark-image.jpg') center/cover no-repeat;
+            color: var(--primary-text-color);
         }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            max-width: 80%;
-        }
-        h1 {
+        .hero h1 {
             font-size: 4rem;
-            margin-bottom: 1rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            letter-spacing: 5px;
-            color: var(--accent-color);
-            text-shadow: 2px 2px 8px var(--shadow-color);
+            margin-bottom: 1rem;
+            animation: fadeIn 2s ease-in-out;
         }
-        .tagline {
+        .hero p {
             font-size: 1.5rem;
-            margin-bottom: 2rem;
             font-style: italic;
-            text-shadow: 1px 1px 5px var(--shadow-color);
+            margin-bottom: 2rem;
+            animation: fadeIn 2.5s ease-in-out;
         }
-        .btn {
+        .hero .btn {
             display: inline-block;
-            background: var(--leather-color);
-            color: var(--text-color);
             padding: 0.75rem 1.5rem;
             text-decoration: none;
+            background: var(--accent-color);
+            color: var(--primary-text-color);
             border-radius: 5px;
-            transition: all 0.3s ease;
+            font-family: 'Fira Sans', sans-serif;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-            border: 2px solid var(--stitch-color);
-            box-shadow: 0 0 10px var(--shadow-color);
-            background-image: url(''); /* Placeholder for the canvas texture */
-            background-size: cover;
-            background-position: center;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .btn:hover::before {
-            opacity: 1;
-        }
-        .btn::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background:
-                linear-gradient(45deg, transparent 49%, var(--stitch-color) 49%, var(--stitch-color) 51%, transparent 51%) 0 0/10px 10px,
-                linear-gradient(-45deg, transparent 49%, var(--stitch-color) 49%, var(--stitch-color) 51%, transparent 51%) 0 0/10px 10px;
-            opacity: 0.5;
-            pointer-events: none;
-        }
-        .btn:hover {
+        .hero .btn:hover {
+            background: var(--secondary-accent-color);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px var(--shadow-color);
-            background-color: #4b2e15; /* Darken the background slightly on hover */
         }
-        .abstract-bg {
+        .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.15;
-            mix-blend-mode: overlay;
+            background: rgba(10, 10, 10, 0.7);
+            pointer-events: none;
+            animation: fadeIn 1s ease-in-out;
         }
-        .books-section {
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .about-section {
+            display: flex;
             padding: 100px 0;
-            background-color: var(--bg-color);
-            border-top: 2px solid var(--border-color);
+            border-bottom: 1px solid var(--dark-gray);
         }
-        .book-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+        .about-text {
+            flex: 1;
+            padding-right: 50px;
+            animation: fadeIn 2s ease-in-out;
         }
-        .book-card {
-            background: var(--secondary-color);
-            padding: 1.5rem;
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+        .about-image {
+            flex: 1;
+            background: url('your-creepy-image.jpg') center/cover no-repeat;
             border-radius: 10px;
-            transition: all 0.3s ease;
+            box-shadow: 0 0 20px var(--dark-gray);
+            animation: fadeIn 2.5s ease-in-out;
+        }
+        .featured-works {
+            padding: 100px 0;
+            background: var(--bg-color);
+        }
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .work-item {
             position: relative;
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            background: var(--dark-gray);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .book-card::before {
-            content: '';
+        .work-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        .work-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px var(--dark-gray);
+        }
+        .work-item:hover img {
+            transform: scale(1.1);
+        }
+        .work-item .work-overlay {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, var(--accent-color) 0%, transparent 50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--hover-highlight);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
-        .book-card:hover::before {
-            opacity: 0.1;
+        .work-item:hover .work-overlay {
+            opacity: 1;
         }
-        .book-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px var(--shadow-color);
+        .work-item .work-details {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: var(--primary-text-color);
+            z-index: 1;
         }
-        .book-title {
+        .work-item .work-details h3 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
         }
-        .book-author {
-            font-style: italic;
-            margin-bottom: 1rem;
+        .work-item .work-details p {
+            font-size: 1rem;
+            margin-bottom: 0;
         }
         footer {
-            background-color: var(--secondary-color);
-            color: var(--text-color);
+            padding: 50px 0;
+            background: var(--dark-gray);
             text-align: center;
-            padding: 2rem 0;
-            border-top: 2px solid var(--border-color);
+        }
+        footer p {
+            margin-bottom: 1rem;
+        }
+        footer a {
+            color: var(--primary-text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--accent-color);
         }
     </style>
 </head>
 <body>
     <header>
-        <nav class="container">
-            <div class="logo">B&J</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#books">Books</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </nav>
+        <div class="container">
+            <nav>
+                <div class="logo">Browne & Jenkins</div>
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#about">About</a>
+                    <a href="#works">Works</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+        </div>
     </header>
 
     <main>
         <section id="home" class="hero">
-            <div class="abstract-bg" id="abstractBg"></div>
-            <div class="hero-content">
-                <h1>Browne & Jenkins</h1>
-                <p class="tagline">Crafting Nightmares, One Page at a Time</p>
-                <a href="#books" class="btn">Explore Our Horrors</a>
+            <div class="hero-overlay"></div>
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Visions of Horror</h1>
+                    <p>Exploring the darkness within.</p>
+                    <a href="#works" class="btn">Discover More</a>
+                </div>
             </div>
         </section>
 
-        <section id="books" class="books-section">
+        <section id="about" class="about-section">
             <div class="container">
-                <h2>Latest Releases</h2>
-                <div class="book-grid" id="bookGrid"></div>
+                <div class="about-text">
+                    <h2>About Browne & Jenkins</h2>
+                    <p>Browne & Jenkins is a literary publication that delves into the darkest corners of human imagination. We specialize in horror, dark fiction, and experimental works that challenge conventional storytelling and evoke profound, unsettling emotions. Our mission is to bring to light the shadows that lurk in the corners of your mind.</p>
+                </div>
+                <div class="about-image"></div>
+            </div>
+        </section>
+
+        <section id="works" class="featured-works">
+            <div class="container">
+                <h2>Featured Works</h2>
+                <div class="works-grid">
+                    <div class="work-item">
+                        <img src="your-work-image-1.jpg" alt="Work Title">
+                        <div class="work-overlay"></div>
+                        <div class="work-details">
+                            <h3>Whispers in the Dark</h3>
+                            <p>By E.A. Blackwood</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <img src="your-work-image-2.jpg" alt="Work Title">
+                        <div class="work-overlay"></div>
+                        <div class="work-details">
+                            <h3>Haunted Souls</h3>
+                            <p>By S.K. Poe</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <img src="your-work-image-3.jpg" alt="Work Title">
+                        <div class="work-overlay"></div>
+                        <div class="work-details">
+                            <h3>The Crimson Ritual</h3>
+                            <p>By M.R. Lovecraft</p>
+                        </div>
+                    </div>
+                    <div class="work-item">
+                        <img src="your-work-image-4.jpg" alt="Work Title">
+                        <div class="work-overlay"></div>
+                        <div class="work-details">
+                            <h3>Shadows of the Mind</h3>
+                            <p>By C.L. Barker</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
@@ -235,96 +297,8 @@
     <footer>
         <div class="container">
             <p>&copy; 2024 Browne & Jenkins. All rights reserved.</p>
+            <a href="#home">Back to Top</a>
         </div>
     </footer>
-
-    <script>
-        const books = [
-            { title: "Echoes of the Void", author: "E.A. Blackwood", description: "A journey into the cosmic unknown that will haunt your dreams." },
-            { title: "Whispers in the Walls", author: "S.K. Poe", description: "The house remembers, and it's ready to share its dark secrets." },
-            { title: "The Crimson Ritual", author: "M.R. Lovecraft", description: "Ancient rites awaken something that should have remained dormant." },
-            { title: "Shadows of the Mind", author: "C.L. Barker", description: "When reality bends, nightmares become the new normal." }
-        ];
-
-        function populateBooks() {
-            const bookGrid = document.getElementById('bookGrid');
-            books.forEach(book => {
-                const bookCard = document.createElement('div');
-                bookCard.className = 'book-card';
-                bookCard.innerHTML = `
-                    <h3 class="book-title">${book.title}</h3>
-                    <p class="book-author">by ${book.author}</p>
-                    <p>${book.description}</p>
-                `;
-                bookGrid.appendChild(bookCard);
-            });
-        }
-
-        function createAbstractBackground() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            function drawShape() {
-                ctx.beginPath();
-                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                for (let i = 0; i < 3; i++) {
-                    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
-                }
-                ctx.closePath();
-                ctx.fillStyle = `rgba(165, 42, 42, ${Math.random() * 0.1})`;
-                ctx.fill();
-            }
-
-            for (let i = 0; i < 50; i++) {
-                drawShape();
-            }
-
-            document.getElementById('abstractBg').appendChild(canvas);
-        }
-
-        function createLeatherTexture() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = 200;
-            canvas.height = 200;
-
-            // Base leather color
-            ctx.fillStyle = '#654321';
-            ctx.fillRect(0, 0, 200, 200);
-
-            // Add texture
-            for (let i = 0; i < 5000; i++) {
-                ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.1})`;
-                ctx.beginPath();
-                ctx.arc(Math.random() * 200, Math.random() * 200, Math.random() * 2, 0, Math.PI * 2);
-                ctx.fill();
-            }
-
-            // Add cracks or veins
-            for (let i = 0; i < 20; i++) {
-                ctx.strokeStyle = `rgba(101, 67, 33, ${Math.random() * 0.2 + 0.2})`;
-                ctx.lineWidth = Math.random() * 2;
-                ctx.beginPath();
-                ctx.moveTo(Math.random() * 200, Math.random() * 200);
-                for (let j = 0; j < 10; j++) {
-                    ctx.lineTo(Math.random() * 200, Math.random() * 200);
-                }
-                ctx.stroke();
-            }
-
-            // Apply the texture to the button
-            document.querySelector('.btn').style.backgroundImage = `url(${canvas.toDataURL()})`;
-        }
-
-        window.addEventListener('load', () => {
-            populateBooks();
-            createAbstractBackground();
-            createLeatherTexture();
-        });
-
-        window.addEventListener('resize', createAbstractBackground);
-    </script>
 </body>
 </html>
