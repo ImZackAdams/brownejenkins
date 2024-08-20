@@ -3,218 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browne & Jenkins - Narrative Exploration</title>
+    <title>Browne & Jenkins - Visions of Horror</title>
     <style>
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --accent-color: #ff4136;
+            --secondary-color: #333;
+            --leather-color: #8B4513;
+            --stitch-color: #D2B48C;
+        }
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Courier New', monospace;
-            background-color: #000;
-            color: #0f0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
             overflow: hidden;
         }
-        #terminal {
-            height: 100vh;
-            width: 100vw;
-            padding: 20px;
-            box-sizing: border-box;
-            overflow-y: auto;
+        .hero-content {
             position: relative;
+            z-index: 1;
         }
-        #cursor {
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+        .btn {
             display: inline-block;
-            width: 10px;
-            height: 20px;
-            background-color: #0f0;
-            animation: blink 0.7s infinite;
+            background: var(--leather-color);
+            color: var(--text-color);
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--stitch-color);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
-        @keyframes blink {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-        .choice {
-            cursor: pointer;
-            color: #ff0;
-            margin: 5px 0;
-        }
-        .choice:hover {
-            text-decoration: underline;
-        }
-        #overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0.15),
-                rgba(0, 0, 0, 0.15) 1px,
-                transparent 1px,
-                transparent 2px
-            );
-            pointer-events: none;
-        }
-        #glitch {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #000;
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
             opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .btn:hover::before {
+            opacity: 1;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                linear-gradient(45deg, transparent 49%, var(--stitch-color) 49%, var(--stitch-color) 51%, transparent 51%) 0 0/10px 10px,
+                linear-gradient(-45deg, transparent 49%, var(--stitch-color) 49%, var(--stitch-color) 51%, transparent 51%) 0 0/10px 10px;
+            opacity: 0.3;
             pointer-events: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+        }
+        .abstract-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+            mix-blend-mode: screen;
+        }
+        .books-section {
+            padding: 100px 0;
+        }
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .book-card {
+            background: var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .book-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--accent-color) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .book-card:hover::before {
+            opacity: 0.1;
+        }
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(255,65,54,0.2);
+        }
+        .book-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .book-author {
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+        footer {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            text-align: center;
+            padding: 2rem 0;
         }
     </style>
 </head>
 <body>
-    <div id="terminal"></div>
-    <div id="overlay"></div>
-    <div id="glitch"></div>
+    <header>
+        <nav class="container">
+            <div class="logo">B&J</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#books">Books</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="abstract-bg" id="abstractBg"></div>
+            <div class="hero-content">
+                <h1>Browne & Jenkins</h1>
+                <p class="tagline">Crafting Nightmares, One Page at a Time</p>
+                <a href="#books" class="btn">Explore Our Horrors</a>
+            </div>
+        </section>
+
+        <section id="books" class="books-section">
+            <div class="container">
+                <h2>Latest Releases</h2>
+                <div class="book-grid" id="bookGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Browne & Jenkins. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script>
-        const terminal = document.getElementById('terminal');
-        let currentStoryNode = 'start';
+        const books = [
+            { title: "Echoes of the Void", author: "E.A. Blackwood", description: "A journey into the cosmic unknown that will haunt your dreams." },
+            { title: "Whispers in the Walls", author: "S.K. Poe", description: "The house remembers, and it's ready to share its dark secrets." },
+            { title: "The Crimson Ritual", author: "M.R. Lovecraft", description: "Ancient rites awaken something that should have remained dormant." },
+            { title: "Shadows of the Mind", author: "C.L. Barker", description: "When reality bends, nightmares become the new normal." }
+        ];
 
-        const storyNodes = {
-            start: {
-                text: "Welcome to Browne & Jenkins, purveyors of literary nightmares. How would you like to proceed?",
-                choices: [
-                    { text: "Explore our latest releases", next: "releases" },
-                    { text: "Meet our authors", next: "authors" },
-                    { text: "Experience a sample of our work", next: "sample" }
-                ]
-            },
-            releases: {
-                text: "Our latest releases include:\n1. 'Whispers in the Void' by E.A. Blackwood\n2. 'The Crimson Maze' by S.L. Holloway\n3. 'Echoes of Eternity' by M.R. James II",
-                choices: [
-                    { text: "Tell me about 'Whispers in the Void'", next: "whispers" },
-                    { text: "Go back", next: "start" }
-                ]
-            },
-            authors: {
-                text: "Our esteemed authors include:\n- E.A. Blackwood: Master of cosmic horror\n- S.L. Holloway: Weaver of psychological terrors\n- M.R. James II: Heir to the ghost story throne",
-                choices: [
-                    { text: "Learn more about E.A. Blackwood", next: "blackwood" },
-                    { text: "Go back", next: "start" }
-                ]
-            },
-            sample: {
-                text: "The door creaks open, revealing a dimly lit room. The air is thick with the scent of old books and something... else. A figure sits in the corner, shrouded in shadows. It speaks: 'Choose your path, dear reader.'",
-                choices: [
-                    { text: "Approach the figure", next: "approach" },
-                    { text: "Examine the room", next: "examine" },
-                    { text: "Run away", next: "run" }
-                ]
-            },
-            whispers: {
-                text: "'Whispers in the Void' is a mind-bending journey through fractured realities. Blackwood's prose will make you question the very fabric of existence.",
-                choices: [
-                    { text: "Purchase 'Whispers in the Void'", next: "purchase" },
-                    { text: "Go back", next: "releases" }
-                ]
-            },
-            blackwood: {
-                text: "E.A. Blackwood, reclusive and brilliant, draws inspiration from dreams and nightmares alike. Their work has been described as 'Lovecraft meets Borges in a fever dream.'",
-                choices: [
-                    { text: "Read a sample of Blackwood's work", next: "sample" },
-                    { text: "Go back", next: "authors" }
-                ]
-            },
-            approach: {
-                text: "As you near the figure, it looks up. You find yourself staring into eyes that seem to contain entire universes. 'Are you ready to see beyond the veil?' it asks.",
-                choices: [
-                    { text: "Yes, show me", next: "beyondVeil" },
-                    { text: "No, I'm not ready", next: "start" }
-                ]
-            },
-            examine: {
-                text: "The room is filled with books, their spines bearing titles you can't quite read. A mirror on the wall doesn't reflect your image, but instead shows a vast, star-filled void.",
-                choices: [
-                    { text: "Touch the mirror", next: "mirror" },
-                    { text: "Go back", next: "sample" }
-                ]
-            },
-            run: {
-                text: "You turn to flee, but the door has vanished. The walls seem to close in, whispering secrets not meant for mortal ears.",
-                choices: [
-                    { text: "Close your eyes and wish it away", next: "start" },
-                    { text: "Listen to the whispers", next: "whispers" }
-                ]
-            },
-            purchase: {
-                text: "Excellent choice. Your copy of 'Whispers in the Void' will arrive in 3-5 business days. Or perhaps it's already here, waiting for you to notice it on your shelf...",
-                choices: [
-                    { text: "Return to main menu", next: "start" }
-                ]
-            },
-            beyondVeil: {
-                text: "The figure waves its hand, and reality seems to ripple. You see glimpses of impossible geometries and hear the echoes of long-dead stars. When you blink, you're back at the beginning, forever changed.",
-                choices: [
-                    { text: "Start over", next: "start" }
-                ]
-            },
-            mirror: {
-                text: "Your fingers brush the surface of the mirror, and you feel a cold so intense it burns. For a moment, you see through the eyes of something ancient and vast, watching the birth and death of galaxies.",
-                choices: [
-                    { text: "Pull away", next: "start" },
-                    { text: "Keep looking", next: "beyondVeil" }
-                ]
-            }
-        };
-
-        function typeWriter(text, onComplete) {
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    terminal.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, 25);
-                } else {
-                    terminal.innerHTML += '<span id="cursor"></span>';
-                    if (onComplete) onComplete();
-                }
-            }
-            type();
-        }
-
-        function displayChoices(choices) {
-            choices.forEach((choice, index) => {
-                const choiceElement = document.createElement('div');
-                choiceElement.className = 'choice';
-                choiceElement.textContent = `${index + 1}. ${choice.text}`;
-                choiceElement.onclick = () => navigateTo(choice.next);
-                terminal.appendChild(choiceElement);
+        function populateBooks() {
+            const bookGrid = document.getElementById('bookGrid');
+            books.forEach(book => {
+                const bookCard = document.createElement('div');
+                bookCard.className = 'book-card';
+                bookCard.innerHTML = `
+                    <h3 class="book-title">${book.title}</h3>
+                    <p class="book-author">by ${book.author}</p>
+                    <p>${book.description}</p>
+                `;
+                bookGrid.appendChild(bookCard);
             });
         }
 
-        function navigateTo(nodeId) {
-            const node = storyNodes[nodeId];
-            terminal.innerHTML = '';
-            currentStoryNode = nodeId;
-            typeWriter(node.text, () => displayChoices(node.choices));
-            triggerGlitchEffect();
-        }
+        function createAbstractBackground() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
 
-        function triggerGlitchEffect() {
-            const glitch = document.getElementById('glitch');
-            glitch.style.opacity = 0.7;
-            setTimeout(() => {
-                glitch.style.opacity = 0;
-            }, 150);
-        }
-
-        navigateTo('start');
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            const choices = storyNodes[currentStoryNode].choices;
-            const key = parseInt(e.key);
-            if (key > 0 && key <= choices.length) {
-                navigateTo(choices[key - 1].next);
+            function drawShape() {
+                ctx.beginPath();
+                ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                for (let i = 0; i < 3; i++) {
+                    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                }
+                ctx.closePath();
+                ctx.fillStyle = `rgba(255, 65, 54, ${Math.random() * 0.1})`;
+                ctx.fill();
             }
+
+            for (let i = 0; i < 50; i++) {
+                drawShape();
+            }
+
+            document.getElementById('abstractBg').appendChild(canvas);
+        }
+
+        function createLeatherTexture() {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 200;
+            canvas.height = 200;
+
+            // Base leather color
+            ctx.fillStyle = '#8B4513';
+            ctx.fillRect(0, 0, 200, 200);
+
+            // Add texture
+            for (let i = 0; i < 5000; i++) {
+                ctx.fillStyle = `rgba(0,0,0,${Math.random() * 0.1})`;
+                ctx.beginPath();
+                ctx.arc(Math.random() * 200, Math.random() * 200, Math.random() * 2, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Apply the texture to the button
+            document.querySelector('.btn').style.backgroundImage = `url(${canvas.toDataURL()})`;
+        }
+
+        window.addEventListener('load', () => {
+            populateBooks();
+            createAbstractBackground();
+            createLeatherTexture();
+        });
+
+        window.addEventListener('resize', createAbstractBackground);
+
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            document.body.style.setProperty('--accent-color', `hsl(${mouseX * 360}, 100%, 50%)`);
         });
     </script>
 </body>
