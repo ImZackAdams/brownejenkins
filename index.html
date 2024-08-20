@@ -2,105 +2,219 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browne & Jenkins - Horror, Dark Fiction, and Experimental Poetry</title>
+    <title>Browne & Jenkins Publishing - Tales of Terror</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <style>
-        body {
-            font-family: 'Georgia', serif;
-            background-color: #1a1a1a;
-            color: #e0e0e0;
-            line-height: 1.6;
+        body, html {
             margin: 0;
             padding: 0;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            font-family: 'Special Elite', cursive;
+            overflow: hidden;
         }
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
+        #film-reel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.9) 0px,
+                rgba(0, 0, 0, 0.9) 1px,
+                transparent 1px,
+                transparent 6px
+            );
+            pointer-events: none;
         }
-        header {
+        #content {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 40px 0;
-            border-bottom: 1px solid #333;
+            padding: 20px;
+            box-sizing: border-box;
         }
         h1 {
-            font-size: 3em;
-            margin-bottom: 10px;
+            font-family: 'Creepster', cursive;
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
         }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 10px;
-        }
-        nav ul li a {
-            color: #e0e0e0;
-            text-decoration: none;
-        }
-        .featured {
-            background-color: #2a2a2a;
-            padding: 20px;
-            margin: 20px 0;
-        }
-        .cta {
-            background-color: #8b0000;
-            color: #ffffff;
-            padding: 10px 20px;
-            text-decoration: none;
+        .poster {
+            width: 200px;
+            height: 300px;
+            background-color: #333;
+            margin: 10px;
             display: inline-block;
-            margin-top: 20px;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            border-top: 1px solid #333;
+        .poster:hover {
+            transform: scale(1.05);
+        }
+        #poster-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+        }
+        #detail-view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #detail-content {
+            max-width: 600px;
+            padding: 20px;
+            background-color: #111;
+            border: 2px solid #800000;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+            color: #fff;
+        }
+        #nav-menu {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        #full-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1002;
+        }
+        #full-menu a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+            margin: 10px 0;
+            transition: color 0.3s ease;
+        }
+        #full-menu a:hover {
+            color: #800000;
+        }
+        .cta-button {
+            background-color: #800000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Special Elite', cursive;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .cta-button:hover {
+            background-color: #600000;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Browne & Jenkins</h1>
-            <p>Purveyors of Horror, Dark Fiction, and Experimental Poetry</p>
-        </header>
-        <nav>
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#publications">Publications</a></li>
-                <li><a href="#submit">Submit</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-        <main>
-            <section class="featured">
-                <h2>Featured Content</h2>
-                <p>Explore our latest chilling tales and mind-bending verses...</p>
-                <!-- Add more featured content here -->
-            </section>
-            <section id="about">
-                <h2>About Browne & Jenkins</h2>
-                <p>Delve into the darkness with Browne & Jenkins, your premier source for horror, dark fiction, and experimental poetry. We publish works that challenge the mind and stir the soul.</p>
-            </section>
-            <section id="cta">
-                <h2>Join Our Dark Community</h2>
-                <a href="#" class="cta">Subscribe Now</a>
-            </section>
-        </main>
-        <footer>
-            <p>&copy; 2024 Browne & Jenkins. All rights reserved.</p>
-            <!-- Add social media links here -->
-        </footer>
+    <div id="film-reel"></div>
+    <div id="nav-menu">☰</div>
+    <div id="full-menu">
+        <a href="#" class="close-btn">✕</a>
+        <a href="#">Home</a>
+        <a href="#">About</a>
+        <a href="#">Catalog</a>
+        <a href="#">Submit</a>
+        <a href="#">Contact</a>
     </div>
+    <div id="content">
+        <h1>Browne & Jenkins Publishing</h1>
+        <div id="poster-container">
+            <!-- Posters will be dynamically added here -->
+        </div>
+        <button class="cta-button">Subscribe to Our Dark Collection</button>
+    </div>
+    <div id="detail-view">
+        <div id="detail-content">
+            <span class="close-btn">✕</span>
+            <h2 id="detail-title"></h2>
+            <p id="detail-description"></p>
+            <button class="cta-button">Read Now</button>
+        </div>
+    </div>
+
+    <script>
+        const books = [
+            { title: "Whispers in the Walls", image: "/api/placeholder/200/300", description: "A chilling tale of a house with secrets deeper than its foundations." },
+            { title: "The Crimson Diary", image: "/api/placeholder/200/300", description: "Words written in blood tell a story that should have remained untold." },
+            { title: "Shadows of the Forgotten", image: "/api/placeholder/200/300", description: "In a town where memories fade, the past comes back with a vengeance." },
+            { title: "Echoes of Eternity", image: "/api/placeholder/200/300", description: "Time bends and reality warps in this mind-bending cosmic horror." }
+        ];
+
+        const posterContainer = document.getElementById('poster-container');
+        const detailView = document.getElementById('detail-view');
+        const detailTitle = document.getElementById('detail-title');
+        const detailDescription = document.getElementById('detail-description');
+
+        books.forEach(book => {
+            const poster = document.createElement('div');
+            poster.className = 'poster';
+            poster.style.backgroundImage = `url(${book.image})`;
+            poster.addEventListener('click', () => showDetail(book));
+            posterContainer.appendChild(poster);
+        });
+
+        function showDetail(book) {
+            detailTitle.textContent = book.title;
+            detailDescription.textContent = book.description;
+            detailView.style.display = 'flex';
+            gsap.from(detailView, {opacity: 0, duration: 0.5});
+        }
+
+        document.querySelectorAll('.close-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                gsap.to(detailView, {opacity: 0, duration: 0.5, onComplete: () => detailView.style.display = 'none'});
+                gsap.to(fullMenu, {opacity: 0, duration: 0.5, onComplete: () => fullMenu.style.display = 'none'});
+            });
+        });
+
+        const navMenu = document.getElementById('nav-menu');
+        const fullMenu = document.getElementById('full-menu');
+
+        navMenu.addEventListener('click', () => {
+            fullMenu.style.display = 'flex';
+            gsap.from(fullMenu, {opacity: 0, duration: 0.5});
+        });
+
+        gsap.from("#content", {opacity: 0, y: 50, duration: 1, ease: "power2.out"});
+        gsap.from(".poster", {opacity: 0, scale: 0.5, duration: 0.5, stagger: 0.2, ease: "back.out(1.7)"});
+
+        const filmReel = document.getElementById('film-reel');
+        gsap.to(filmReel, {backgroundPosition: "0 100%", duration: 10, repeat: -1, ease: "none"});
+    </script>
 </body>
 </html>
