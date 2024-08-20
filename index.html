@@ -6,17 +6,19 @@
     <title>Browne & Jenkins - Visions of Horror</title>
     <style>
         :root {
-            --bg-color: #000;
-            --text-color: #fff;
-            --accent-color: #ff4136;
-            --secondary-color: #333;
-            --leather-color: #8B4513;
-            --stitch-color: #D2B48C;
+            --bg-color: #1b1b1b;
+            --text-color: #f5f5dc;
+            --accent-color: #a52a2a;
+            --secondary-color: #3b3b3b;
+            --leather-color: #654321;
+            --stitch-color: #c19a6b;
+            --border-color: #8b5a2b;
+            --shadow-color: rgba(0, 0, 0, 0.7);
         }
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Georgia', serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             overflow-x: hidden;
@@ -33,7 +35,8 @@
             width: 100%;
             z-index: 1000;
             padding: 20px 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%);
+            border-bottom: 1px solid var(--border-color);
         }
         nav {
             display: flex;
@@ -45,6 +48,7 @@
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 2px;
+            color: var(--accent-color);
         }
         .nav-links a {
             color: var(--text-color);
@@ -63,21 +67,26 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            background: var(--bg-color) url('https://www.transparenttextures.com/patterns/asfalt-dark.png') repeat;
         }
         .hero-content {
             position: relative;
             z-index: 1;
+            max-width: 80%;
         }
         h1 {
             font-size: 4rem;
             margin-bottom: 1rem;
             text-transform: uppercase;
             letter-spacing: 5px;
+            color: var(--accent-color);
+            text-shadow: 2px 2px 8px var(--shadow-color);
         }
         .tagline {
             font-size: 1.5rem;
             margin-bottom: 2rem;
             font-style: italic;
+            text-shadow: 1px 1px 5px var(--shadow-color);
         }
         .btn {
             display: inline-block;
@@ -92,7 +101,10 @@
             position: relative;
             overflow: hidden;
             border: 2px solid var(--stitch-color);
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 10px var(--shadow-color);
+            background-image: url(''); /* Placeholder for the canvas texture */
+            background-size: cover;
+            background-position: center;
         }
         .btn::before {
             content: '';
@@ -118,12 +130,13 @@
             background:
                 linear-gradient(45deg, transparent 49%, var(--stitch-color) 49%, var(--stitch-color) 51%, transparent 51%) 0 0/10px 10px,
                 linear-gradient(-45deg, transparent 49%, var(--stitch-color) 49%, var(--stitch-color) 51%, transparent 51%) 0 0/10px 10px;
-            opacity: 0.3;
+            opacity: 0.5;
             pointer-events: none;
         }
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(139, 69, 19, 0.4);
+            box-shadow: 0 5px 15px var(--shadow-color);
+            background-color: #4b2e15; /* Darken the background slightly on hover */
         }
         .abstract-bg {
             position: absolute;
@@ -131,11 +144,13 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.3;
-            mix-blend-mode: screen;
+            opacity: 0.15;
+            mix-blend-mode: overlay;
         }
         .books-section {
             padding: 100px 0;
+            background-color: var(--bg-color);
+            border-top: 2px solid var(--border-color);
         }
         .book-grid {
             display: grid;
@@ -149,6 +164,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            border: 1px solid var(--border-color);
         }
         .book-card::before {
             content: '';
@@ -166,7 +182,7 @@
         }
         .book-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(255,65,54,0.2);
+            box-shadow: 0 10px 20px var(--shadow-color);
         }
         .book-title {
             font-size: 1.5rem;
@@ -181,6 +197,7 @@
             color: var(--text-color);
             text-align: center;
             padding: 2rem 0;
+            border-top: 2px solid var(--border-color);
         }
     </style>
 </head>
@@ -256,7 +273,7 @@
                     ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
                 }
                 ctx.closePath();
-                ctx.fillStyle = `rgba(255, 65, 54, ${Math.random() * 0.1})`;
+                ctx.fillStyle = `rgba(165, 42, 42, ${Math.random() * 0.1})`;
                 ctx.fill();
             }
 
@@ -274,7 +291,7 @@
             canvas.height = 200;
 
             // Base leather color
-            ctx.fillStyle = '#8B4513';
+            ctx.fillStyle = '#654321';
             ctx.fillRect(0, 0, 200, 200);
 
             // Add texture
@@ -283,6 +300,18 @@
                 ctx.beginPath();
                 ctx.arc(Math.random() * 200, Math.random() * 200, Math.random() * 2, 0, Math.PI * 2);
                 ctx.fill();
+            }
+
+            // Add cracks or veins
+            for (let i = 0; i < 20; i++) {
+                ctx.strokeStyle = `rgba(101, 67, 33, ${Math.random() * 0.2 + 0.2})`;
+                ctx.lineWidth = Math.random() * 2;
+                ctx.beginPath();
+                ctx.moveTo(Math.random() * 200, Math.random() * 200);
+                for (let j = 0; j < 10; j++) {
+                    ctx.lineTo(Math.random() * 200, Math.random() * 200);
+                }
+                ctx.stroke();
             }
 
             // Apply the texture to the button
@@ -296,12 +325,6 @@
         });
 
         window.addEventListener('resize', createAbstractBackground);
-
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            document.body.style.setProperty('--accent-color', `hsl(${mouseX * 360}, 100%, 50%)`);
-        });
     </script>
 </body>
 </html>
