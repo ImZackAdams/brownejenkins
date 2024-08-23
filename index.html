@@ -210,28 +210,32 @@
         }
 
         /* Updated Flickering effect styles */
-        @keyframes flicker {
+    @keyframes flicker {
             0%, 100% { opacity: 1; color: #ffffff; }
-            25% { opacity: 0.3; }
-            26% { opacity: 1; }
-            28% { opacity: 0.4; }
+            5% { opacity: 0.3; }
+            6% { opacity: 1; }
+            7% { opacity: 0.4; }
+            8% { opacity: 1; }
+            9% { opacity: 0.2; }
+            10% { opacity: 1; }
             30% { opacity: 1; }
-            45% { opacity: 0.2; }
-            46% { opacity: 1; }
-            48% { opacity: 0.5; }
-            50% { opacity: 1; }
+            35% { opacity: 0.3; }
+            36% { opacity: 1; }
+            37% { opacity: 0.4; }
+            38% { opacity: 1; }
+            39% { opacity: 0.2; }
+            40% { opacity: 1; }
+            60% { opacity: 1; }
             65% { opacity: 0.3; }
             66% { opacity: 1; }
-            68% { opacity: 0.4; }
-            70% { opacity: 1; }
-            85% { opacity: 0.2; }
-            86% { opacity: 1; }
-            88% { opacity: 0.5; }
-            90%, 100% { opacity: 1; color: #ffffff; }
+            67% { opacity: 0.4; }
+            68% { opacity: 1; }
+            69% { opacity: 0.2; }
+            70%, 100% { opacity: 1; color: #ffffff; }
         }
 
         .hero h1.flicker, .hero p.flicker {
-            animation: flicker 0.6s step-end 3 forwards;
+            animation: flicker 3s step-end 1 forwards;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
     </style>
@@ -321,7 +325,7 @@
         </div>
     </footer>
 
-    <script>
+  <script>
         function typeWriter(element, text, speed = 50) {
             return new Promise((resolve) => {
                 let i = 0;
