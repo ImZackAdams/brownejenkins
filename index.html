@@ -209,17 +209,30 @@
             color: var(--accent-color);
         }
 
-        /* Typewriter effect styles */
-        .typewriter h1, .typewriter p {
-            overflow: hidden;
-            border-right: 0.15em solid var(--accent-color);
-            white-space: nowrap;
-            margin: 0 auto;
-            letter-spacing: 0.15em;
+        /* Updated Flickering effect styles */
+        @keyframes flicker {
+            0%, 100% { opacity: 1; color: #ffffff; }
+            25% { opacity: 0.3; }
+            26% { opacity: 1; }
+            28% { opacity: 0.4; }
+            30% { opacity: 1; }
+            45% { opacity: 0.2; }
+            46% { opacity: 1; }
+            48% { opacity: 0.5; }
+            50% { opacity: 1; }
+            65% { opacity: 0.3; }
+            66% { opacity: 1; }
+            68% { opacity: 0.4; }
+            70% { opacity: 1; }
+            85% { opacity: 0.2; }
+            86% { opacity: 1; }
+            88% { opacity: 0.5; }
+            90%, 100% { opacity: 1; color: #ffffff; }
         }
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: var(--accent-color) }
+
+        .hero h1.flicker, .hero p.flicker {
+            animation: flicker 0.6s step-end 3 forwards;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
     </style>
 </head>
@@ -243,12 +256,8 @@
             <div class="hero-overlay"></div>
             <div class="container">
                 <div class="hero-content">
-                    <div class="typewriter">
-                        <h1 id="heroTitle"></h1>
-                    </div>
-                    <div class="typewriter">
-                        <p id="heroSubtitle"></p>
-                    </div>
+                    <h1 id="heroTitle"></h1>
+                    <p id="heroSubtitle"></p>
                     <a href="#works" class="btn">Discover More</a>
                 </div>
             </div>
@@ -322,7 +331,6 @@
                         i++;
                         setTimeout(type, speed);
                     } else {
-                        element.style.borderRight = 'none';
                         resolve();
                     }
                 }
@@ -340,6 +348,12 @@
             await new Promise(resolve => setTimeout(resolve, 500));
 
             await typeWriter(subtitle, 'Exploring the darkness within.', 50);
+
+            // Start flickering effect after all text is displayed
+            title.classList.add('flicker');
+            subtitle.classList.add('flicker');
+
+            // The flicker class will be kept as the animation ends with full opacity and white color
         }
 
         document.addEventListener('DOMContentLoaded', (event) => {
