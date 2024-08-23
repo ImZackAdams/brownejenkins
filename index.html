@@ -243,6 +243,22 @@
             animation: flicker 3s step-end 1 forwards;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
         }
+
+        /* Blinking Cursor Effect */
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .cursor {
+            display: inline-block;
+            background-color: var(--primary-text-color);
+            width: 2px;
+            height: 1em;
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+        }
     </style>
 </head>
 <body>
@@ -265,8 +281,8 @@
             <div class="hero-overlay"></div>
             <div class="container">
                 <div class="hero-content">
-                    <h1 id="heroTitle"></h1>
-                    <p id="heroSubtitle"></p>
+                    <h1 id="heroTitle"><span class="cursor" id="cursorTitle"></span></h1>
+                    <p id="heroSubtitle"><span class="cursor" id="cursorSubtitle"></span></p>
                     <a href="#works" class="btn">Discover More</a>
                 </div>
             </div>
@@ -331,12 +347,12 @@
     </footer>
 
     <script>
-        function typeWriter(element, text, speed = 50) {
+        function typeWriter(element, text, cursor, speed = 50) {
             return new Promise((resolve) => {
                 let i = 0;
                 function type() {
                     if (i < text.length) {
-                        element.innerHTML += text.charAt(i);
+                        element.innerHTML = text.substring(0, i + 1) + cursor.outerHTML;
                         i++;
                         setTimeout(type, speed);
                     } else {
@@ -350,17 +366,22 @@
         async function animateHero() {
             const title = document.getElementById('heroTitle');
             const subtitle = document.getElementById('heroSubtitle');
+            const cursorTitle = document.getElementById('cursorTitle');
+            const cursorSubtitle = document.getElementById('cursorSubtitle');
 
-            await typeWriter(title, 'Browne & Jenkins', 100);
+            await typeWriter(title, 'Browne & Jenkins', cursorTitle, 100);
 
             // Add a delay between title and subtitle
             await new Promise(resolve => setTimeout(resolve, 500));
-            await typeWriter(subtitle, 'Forbidden manuscripts.', 50);
+
+            await typeWriter(subtitle, 'Forbidden manuscripts.', cursorSubtitle, 50);
 
             // Add a short delay before starting the flicker effect
             await new Promise(resolve => setTimeout(resolve, 300));
 
             // Start flickering effect after all text is displayed
+            title.querySelector('.cursor').style.display = 'none';
+            subtitle.querySelector('.cursor').style.display = 'none';
             title.classList.add('flicker');
             subtitle.classList.add('flicker');
         }
